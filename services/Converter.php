@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Node.php';
+
 class Converter {
 	
 	// private static $option;
