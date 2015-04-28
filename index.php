@@ -23,7 +23,7 @@ if ( $handle !== FALSE ) {
 // die();
 
 // Converting data to xml
-$maker = new XMLTreeMaker();
+$xml = new DOMDocument('1.0', 'UTF-8');
 
 
 $root = $xml->createElement("root");
