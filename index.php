@@ -2,10 +2,8 @@
 
 // Dependencies
 require_once 'services/Converter.php';
-require_once 'services/Node.php';
-require_once 'services/XMLTreeMaker.php';
 
-$converter = new Converter();
+$converter = new Converter("1.0", "UTF-8");
 
 // Extracting data from csv
 
@@ -20,29 +18,14 @@ if ( $handle !== FALSE ) {
 	// echo "</pre>";
 }
 
+// var_dump($converter);
 // die();
 
 // Converting data to xml
-$xml = new DOMDocument('1.0', 'UTF-8');
 
+$xml_str = $converter->generateXML($out_arr);
 
-$root = $xml->createElement("root");
-$root = $xml->appendChild($root);
-// 
-
-
-foreach ( $out_arr as $item ) {
-	print_r($item);
-	$node = $xml->createElement("node");
-	$node = $root->appendChild($node);
-	foreach ( $item as $subNode ) {
-		$child = $xml->createElement("property", $subNode);
-		$child = $node->appendChild($child);
-	}
-}
-
-$xml_str = $xml->saveXML();
-$xml->save("example.xml");
+$converter->save("example.xml");
 
 
 
