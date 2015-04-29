@@ -6,3 +6,4 @@ TODO:
 - Validation for data inside in input CSV file.
 - Dynamic node names etc.
 - Implement proper simple REST api for handling requests and responses
+- Documentation for classes
