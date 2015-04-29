@@ -1,22 +1,19 @@
 <?php
 
+/**
+ * XML Generation Operations
+ * 
+ * @author: Wissam K
+ */
+
 class Converter extends DOMDocument {
 	
-	public $ver;
-	public $enc;
+	protected $ver;
+	protected $enc;
 	
 	public function __construct ($ver, $enc)
 	{
 		parent::__construct($ver, $enc);
-	}
-	
-	public static function extractData ($handle, $option=null)
-	{
-		$out_arr = array();
-		while ( ($data = fgetcsv($handle)) !== FALSE ) {
-			$out_arr[] = $data;
-		}
-		return $out_arr;
 	}
 	
 	public function generateXML ($arr)
