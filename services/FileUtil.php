@@ -8,8 +8,17 @@
 
 class FileUtil {
 	
+	/**
+	 * Configuration array
+	 * @var array
+	 */
 	protected $_config = [];
 	
+	/**
+	 * Constructs FileUtil
+	 * 
+	 * @param array key-value pair configuration settings
+	 */
 	public function __construct ($config=null)
 	{
 		$this->_config = array(
