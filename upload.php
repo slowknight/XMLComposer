@@ -35,11 +35,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 				$xml_str = $converter->generateXML($out_arr);
 				
 				if ( !empty($xml_str) ) {
-					$xml_file_output = 'output' . rand() . '.xml';
+					$xml_file_output = $_SERVER["DOCUMENT_ROOT"] . '/' . 'output' . rand() . '.xml';
 					$converter->save($xml_file_output);
 					
 					// Render response
-					$file_location = $_SERVER["DOCUMENT_ROOT"] . '/dev/xmlcomposer/' . $xml_file_output;
+					$file_location = $xml_file_output;
 					
 					// Download file
 					if (file_exists($file_location)) {
