@@ -11,7 +11,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	
 	if ( isset($_FILES['file']) ) {
 		
-		$fileUtil = new FileUtil();
+		try {
+			$fileUtil = new FileUtil();
+		} catch ( Exception $e ) {
+			echo "Error instantiating environment.";
+		}
 		
 		$file = $_FILES['file'];
 		
@@ -39,15 +43,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 					
 					// Download file
 					if (file_exists($file_location)) {
-			            header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
-			            header("Cache-Control: public"); // needed for i.e.
-			            header("Content-Type: application/xml");
-			            // header("Content-Transfer-Encoding: Binary");
-			            header("Content-Length:".filesize($file_location));
-			            // header("Content-Disposition: attachment; filename=file.zip");
-			            readfile($file_location);
-			            die();        
-			        }
+				            header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
+				            header("Cache-Control: public"); //For IE
+				            header("Content-Type: application/xml");
+				            header("Content-Length:".filesize($file_location));
+				            readfile($file_location);
+				            die();        
+				        }
 					
 				}
 				
