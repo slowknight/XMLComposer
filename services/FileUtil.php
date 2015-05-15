@@ -20,14 +20,18 @@ class FileUtil {
 			if ( !is_array($config) ) {
 				throw new Exception("Invalid configuration input.");
 			} else {
-				array_unique(array_merge($this->_config, $config));
+				foreach ($config as $key => $value) {
+					if ( !empty($value) ) {
+						$this->_config[$key] = $value;
+					}
+				}
 			}
 		}
 	}
 	
 	public function validateUploadedFile ($file)
 	{
-		if ( !in_array(self::getFileExtension($file['name']), $this->_config['allowed_ext']) ) {
+		if ( !in_array(self::_getFileExtension($file['name']), $this->_config['allowed_ext']) ) {
 			return FALSE;
 		}
 		if ( $file['size'] > $this->_config['allowed_size'] ) {
@@ -39,7 +43,7 @@ class FileUtil {
 		return TRUE;
 	}
 	
-	public static function getFileExtension ($filename)
+	public static function _getFileExtension ($filename)
 	{
 		$file_ext = explode('.', $filename);
 		$file_ext = strtolower(end($file_ext));
@@ -53,6 +57,11 @@ class FileUtil {
 			$out_arr[] = $data;
 		}
 		return $out_arr;
+	}
+	
+	public function _getConfig ()
+	{
+		return $this->_config;
 	}
 	
 }
