@@ -16,7 +16,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			'allowed_size' => 60000,
 		);
 		
-		$fileUtil = new FileUtil($configuration);
+		try {
+			$fileUtil = new FileUtil($configuration);
+		} catch ( Exception $e ) {
+			echo "Error instantiating environment.";
+		}
 		
 		$file = $_FILES['file'];
 		
@@ -36,23 +40,21 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 				$xml_str = $converter->generateXML($out_arr);
 				
 				if ( !empty($xml_str) ) {
-					$xml_file_output = 'output' . rand() . '.xml';
+					$xml_file_output = $_SERVER["DOCUMENT_ROOT"] . '/' . 'output' . rand() . '.xml';
 					$converter->save($xml_file_output);
 					
 					// Render response
-					$file_location = $_SERVER["DOCUMENT_ROOT"] . '/dev/xmlcomposer/' . $xml_file_output;
+					$file_location = $xml_file_output;
 					
 					// Download file
 					if (file_exists($file_location)) {
-			            header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
-			            header("Cache-Control: public"); // needed for i.e.
-			            header("Content-Type: application/xml");
-			            // header("Content-Transfer-Encoding: Binary");
-			            header("Content-Length:".filesize($file_location));
-			            // header("Content-Disposition: attachment; filename=file.zip");
-			            readfile($file_location);
-			            die();        
-			        }
+				            header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
+				            header("Cache-Control: public"); //For IE
+				            header("Content-Type: application/xml");
+				            header("Content-Length:".filesize($file_location));
+				            readfile($file_location);
+				            die();        
+				        }
 					
 				}
 				
