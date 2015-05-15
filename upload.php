@@ -11,7 +11,12 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	
 	if ( isset($_FILES['file']) ) {
 		
-		$fileUtil = new FileUtil();
+		$configuration = array(
+			'allowed_ext' => array('csv'),
+			'allowed_size' => 60000,
+		);
+		
+		$fileUtil = new FileUtil($configuration);
 		
 		$file = $_FILES['file'];
 		
