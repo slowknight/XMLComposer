@@ -4,16 +4,22 @@
  * Front End Controller
  */
 
+// Dependencies
 require_once 'services/FileUtil.php';
 require_once 'services/Converter.php';
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	
-	if ( isset($_FILES['file']) ) {
+	if(!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+	    echo 'No file uploaded.';
+	}
+	
+	// Case : file uploaded
+	else {
 		
 		$configuration = array(
 			'allowed_ext' => array('csv'),
-			'allowed_size' => 60000,
+			'allowed_size' => 300000,
 		);
 		
 		try {
@@ -24,6 +30,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		
 		$file = $_FILES['file'];
 		
+		// Case : Uploaded file valid
 		if ( $fileUtil->validateUploadedFile($file) ) {
 			
 			$handle = fopen($file['tmp_name'], "r");
@@ -48,13 +55,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 					
 					// Download file
 					if (file_exists($file_location)) {
-				            header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
-				            header("Cache-Control: public"); //For IE
-				            header("Content-Type: application/xml");
-				            header("Content-Length:".filesize($file_location));
-				            readfile($file_location);
-				            die();        
-				        }
+			            header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
+			            header("Cache-Control: public"); //For IE
+			            header("Content-Type: application/xml");
+			            header("Content-Length:".filesize($file_location));
+			            readfile($file_location);
+			            die();        
+			        }
 					
 				}
 				
