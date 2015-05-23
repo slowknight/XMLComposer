@@ -7,3 +7,6 @@ TODO:
 - Dynamic node names etc.
 - Implement proper simple REST api for handling requests and responses
 - Documentation for classes
+
+ISSUES:
+- File not being parsed properly when it reaches a certain size.
