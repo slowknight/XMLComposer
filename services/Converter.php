@@ -22,7 +22,6 @@ class Converter extends DOMDocument {
 		$root = $this->appendChild($root);
 		
 		foreach ( $arr as $item ) {
-			// print_r($item);
 			$node = $this->createElement("node");
 			$node = $root->appendChild($node);
 			foreach ( $item as $subNode ) {
