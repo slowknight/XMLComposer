@@ -5,8 +5,7 @@
  */
 
 // Dependencies
-require_once 'services/FileUtil.php';
-require_once 'services/Converter.php';
+require_once 'services/autoload.php';
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	
