@@ -10,6 +10,7 @@ require_once 'services/Converter.php';
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	
+	// Case : no file uploaded
 	if(!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
 	    echo 'No file uploaded.';
 	}
@@ -17,6 +18,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	// Case : file uploaded
 	else {
 		
+		// Initializing FileUtil tools
 		$configuration = array(
 			'allowed_ext' => array('csv'),
 			'allowed_size' => 300000,
@@ -28,6 +30,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			echo "Error instantiating environment.";
 		}
 		
+		// Pick up the uploaded file
 		$file = $_FILES['file'];
 		
 		// Case : Uploaded file valid
@@ -67,6 +70,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 				
 			}
 			
+		}
+		// Error
+		else {
+			echo "Error invalid file.";
 		}
 		
 	}
